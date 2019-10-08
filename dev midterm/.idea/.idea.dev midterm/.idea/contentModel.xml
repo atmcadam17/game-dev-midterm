@@ -6,8 +6,12 @@
       <e p="Assets" t="Include">
         <e p="Scripts" t="Include">
           <e p="dogFriend.cs" t="Include" />
+          <e p="lonedogMove.cs" t="Include" />
+          <e p="pickuptreat.cs" t="Include" />
           <e p="player.cs" t="Include" />
           <e p="scoreUpdate.cs" t="Include" />
+          <e p="specialTalk.cs" t="Include" />
+          <e p="talkBox.cs" t="Include" />
           <e p="test stuff" t="Include">
             <e p="cameraFollow.cs" t="Include" />
             <e p="makeWall.cs" t="Include" />
@@ -15,6 +19,7 @@
             <e p="raycastTest.cs" t="Include" />
             <e p="roombaController.cs" t="Include" />
           </e>
+          <e p="treatBehavior.cs" t="Include" />
         </e>
       </e>
       <e p="dev midterm.sln" t="IncludeFlat" />

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - test
   - wall
+  - pile
+  - treat
   layers:
   - Default
   - TransparentFX
