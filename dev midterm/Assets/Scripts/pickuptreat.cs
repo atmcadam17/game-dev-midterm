@@ -22,7 +22,7 @@ public class pickuptreat : MonoBehaviour
             
             if (Input.GetMouseButtonDown(0))
             {
-                if (Physics.Raycast(clickingPile, out rayHit, 20))
+                if (Physics.Raycast(clickingPile, out rayHit, 20, LayerMask.GetMask("pile")))
                 {
                     if (rayHit.collider.tag == "pile")
                     {

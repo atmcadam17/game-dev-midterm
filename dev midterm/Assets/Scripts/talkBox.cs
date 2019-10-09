@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Timers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,6 +40,10 @@ public class talkBox : MonoBehaviour
     private bool alreadyTalked;
     private bool talking;
     
+    private float talkPause;
+    private bool timer;
+
+    public GameObject score;
     
     void Start()
     {
@@ -48,6 +53,8 @@ public class talkBox : MonoBehaviour
         talkPhase = 0;
         alreadyTalked = false;
         talking = false;
+        timer = false;
+        talkPause = .5f;
     }
 
     void Update()
@@ -79,12 +86,18 @@ public class talkBox : MonoBehaviour
                 highlightedAnswer += 1;
             }
         }
+
+        if (timer && talkPause > 0)
+        {
+            talkPause -= Time.deltaTime;
+        }
     }
 
     private void OnTriggerStay(Collider other)
     {
         if (other.name.Equals("player"))
         {
+            
             if (talkPhase == 0 && Input.GetKeyDown(KeyCode.Return) && !alreadyTalked)
             {
                 talkSystem.SetActive(true);
@@ -148,8 +161,12 @@ public class talkBox : MonoBehaviour
                     talkSystem.SetActive(false);
                     talkPhase = 0;
                     highlightedAnswer = 1;
+                    timer = true;
+                    score.GetComponent<scoreUpdate>().downDog();
                 }
-            } else if (alreadyTalked && Input.GetKeyDown(KeyCode.Return))
+            }
+            
+            if (alreadyTalked && Input.GetKeyDown(KeyCode.Return) && !talking && talkPause <= 0)
             {
                 talkSystem.SetActive(true);
                 dialogue.text = alreadyTalkedText;
@@ -158,8 +175,9 @@ public class talkBox : MonoBehaviour
                 answer3.text = "";
                 playerscript.movelocked = true;
                 talking = true;
-                
-                if (Input.GetKeyDown(KeyCode.Return) && talking)
+            } else if (talking)
+            {
+                if (Input.GetKeyDown(KeyCode.Return))
                 {
                     playerscript.movelocked = false;
                     talkSystem.SetActive(false);

@@ -15,6 +15,7 @@ public class lonedogMove : MonoBehaviour
 
     void Update()
     {
+
         Ray myRay = new Ray(this.transform.position, this.transform.forward);
         
         Debug.DrawRay(this.transform.position, this.transform.forward, Color.cyan, maxDist);

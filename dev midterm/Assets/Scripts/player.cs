@@ -38,15 +38,15 @@ public class player : MonoBehaviour
     {
         if (!movelocked)
         {
-            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)){
+            if (Input.GetKey(KeyCode.DownArrow)){
                 this.transform.Translate(new Vector3(0,0,-movespeed));
-            } else if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)){
+            } else if (Input.GetKey(KeyCode.UpArrow)){
                 this.transform.Translate(new Vector3(0,0,movespeed));
             }
 
-            if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)){
+            if(Input.GetKey(KeyCode.RightArrow)){
                 this.transform.Rotate(new Vector3(0,turnspeed,0));
-            } else if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)){
+            } else if(Input.GetKey(KeyCode.LeftArrow)){
                 transform.eulerAngles += new Vector3(0,-turnspeed,0);
             }
         }

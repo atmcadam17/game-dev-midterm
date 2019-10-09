@@ -4,16 +4,22 @@
     <e p="$PROJECT_DIR$" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="Materials" t="Include">
+          <e p="Amatic_SC" t="Include">
+            <e p="OFL.txt" t="Include" />
+          </e>
+        </e>
         <e p="Scripts" t="Include">
+          <e p="cameraFollow.cs" t="Include" />
           <e p="dogFriend.cs" t="Include" />
           <e p="lonedogMove.cs" t="Include" />
           <e p="pickuptreat.cs" t="Include" />
           <e p="player.cs" t="Include" />
           <e p="scoreUpdate.cs" t="Include" />
           <e p="specialTalk.cs" t="Include" />
+          <e p="startGame.cs" t="Include" />
           <e p="talkBox.cs" t="Include" />
           <e p="test stuff" t="Include">
-            <e p="cameraFollow.cs" t="Include" />
             <e p="makeWall.cs" t="Include" />
             <e p="mouseRaycastTest.cs" t="Include" />
             <e p="raycastTest.cs" t="Include" />
