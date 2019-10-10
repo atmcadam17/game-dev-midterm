@@ -22,8 +22,8 @@ public class specialTalk : MonoBehaviour
     void Start()
     {
         friendly = false;
-        move = GameObject.Find("lone dog").GetComponent<lonedogMove>();
-        follow = GameObject.Find("lone dog").GetComponent<dogFriend>();
+        move = GameObject.Find("partytime").GetComponent<lonedogMove>();
+        follow = GameObject.Find("partytime").GetComponent<dogFriend>();
         talkPhase = 0;
     }
 
