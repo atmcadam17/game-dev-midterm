@@ -18,6 +18,8 @@ public class specialTalk : MonoBehaviour
     public Text answer1;
     public Text answer2;
     public Text answer3;
+
+    public bool inRange;
     
     void Start()
     {
@@ -25,11 +27,20 @@ public class specialTalk : MonoBehaviour
         move = GameObject.Find("partytime").GetComponent<lonedogMove>();
         follow = GameObject.Find("partytime").GetComponent<dogFriend>();
         talkPhase = 0;
+        inRange = false;
     }
 
     void Update()
     {
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name.Equals("player"))
+        {
+            inRange = true;
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -79,6 +90,14 @@ public class specialTalk : MonoBehaviour
         {
             follow.dogFollow = true;
             move.movement = false;
+        }
+    }
+    
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.name.Equals("player"))
+        {
+            inRange = false;
         }
     }
 }

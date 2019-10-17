@@ -26,7 +26,9 @@
             <e p="roombaController.cs" t="Include" />
           </e>
           <e p="treatBehavior.cs" t="Include" />
+          <e p="treatTalk.cs" t="Include" />
         </e>
+        <e p="specialTreatTalk.cs" t="Include" />
       </e>
       <e p="dev midterm.sln" t="IncludeFlat" />
       <e p="Library" t="ExcludeRecursive" />

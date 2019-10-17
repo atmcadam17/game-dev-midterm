@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,18 +9,31 @@ public class player : MonoBehaviour
     public float turnspeed;
     public float jumppower;
     public float jumpRayDist;
+    private Array treatList;
+    public pickuptreat respawn;
     
-    [HideInInspector] public bool movelocked;
+
+    [HideInInspector]
+    public bool movelocked;
+    public bool carrying;
             
     private Rigidbody rb;
     
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
+        carrying = false;
+        respawn = GameObject.Find("treat collider").GetComponent<pickuptreat>();
     }
 
     void Update()
     {
+        treatList = GameObject.FindGameObjectsWithTag("treat");
+        if (carrying)
+        {
+            checkTreats();
+        }
+        
         if (!movelocked)
         {
             Ray downcheck = new Ray(this.transform.position, Vector3.down);
@@ -48,6 +62,22 @@ public class player : MonoBehaviour
                 this.transform.Rotate(new Vector3(0,turnspeed,0));
             } else if(Input.GetKey(KeyCode.LeftArrow)){
                 transform.eulerAngles += new Vector3(0,-turnspeed,0);
+            }
+        }
+    }
+
+    public void checkTreats()
+    {
+        var treats = 0;
+        
+        foreach (var treat in treatList)
+        {
+            treats++;
+            
+            if (treats > 1)
+            {
+                Destroy(GameObject.FindGameObjectWithTag("treat"));
+                treats--;
             }
         }
     }

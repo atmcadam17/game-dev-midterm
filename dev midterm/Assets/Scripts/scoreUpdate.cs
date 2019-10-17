@@ -7,14 +7,11 @@ using UnityEngine.SceneManagement;
 public class scoreUpdate : MonoBehaviour
 {
     public int dogsLeft;
-    private Text scoreDisplay;
+    // private Text scoreDisplay;
     
     void Start()
     {
         dogsLeft = 3;
-        scoreDisplay = GetComponent<Text>();
-        
-        scoreDisplay.text = "Dogs to Collect: " + dogsLeft;
     }
 
     void Update()
@@ -23,11 +20,13 @@ public class scoreUpdate : MonoBehaviour
         {
             SceneManager.LoadScene("end screen");
         }
+        
+        // scoreDisplay.text = "Dogs to Collect: " + dogsLeft;
     }
 
     public void downDog()
     {
         dogsLeft--;
-        scoreDisplay.text = "Dogs to Collect: " + dogsLeft;
+        // scoreDisplay.text = "Dogs to Collect: " + dogsLeft;
     }
 }

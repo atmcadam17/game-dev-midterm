@@ -38,10 +38,12 @@ public class talkBox : MonoBehaviour
     
     private int talkPhase;
     private bool alreadyTalked;
-    private bool talking;
+    public bool talkingToSomeoneElse;
     
     private float talkPause;
     private bool timer;
+    private bool talkingToMe;
+    private int talkphase2;
 
     public GameObject score;
     
@@ -52,28 +54,39 @@ public class talkBox : MonoBehaviour
         highlightedAnswer = 1;
         talkPhase = 0;
         alreadyTalked = false;
-        talking = false;
+        talkingToSomeoneElse = false;
         timer = false;
         talkPause = .5f;
+        talkingToMe = false;
+        talkphase2 = 0;
     }
 
     void Update()
     {
+        if (talkSystem.activeSelf && !talkingToMe)
+        {
+            talkingToSomeoneElse = true;
+        }
+        else
+        {
+            talkingToSomeoneElse = false;
+        }
+        
         if (highlightedAnswer == 1)
         {
-            answer1.color = new Color(0,0,0,1);
-            answer2.color = new Color(0,0,0,.5f);
-            answer3.color = new Color(0,0,0,.5f);
+            answer1.color = new Color(255,255,255,1);
+            answer2.color = new Color(255,255,255,.5f);
+            answer3.color = new Color(255,255,255,.5f);
         } else if (highlightedAnswer == 2)
         {
-            answer1.color = new Color(0,0,0,.5f);
-            answer2.color = new Color(0,0,0,1);
-            answer3.color = new Color(0,0,0,.5f);
+            answer1.color = new Color(255,255,255,.5f);
+            answer2.color = new Color(255,255,255,1);
+            answer3.color = new Color(255,255,255,.5f);
         } else if (highlightedAnswer == 3)
         {
-            answer1.color = new Color(0,0,0,.5f);
-            answer2.color = new Color(0,0,0,.5f);
-            answer3.color = new Color(0,0,0,1);
+            answer1.color = new Color(255,255,255,.5f);
+            answer2.color = new Color(255,255,255,.5f);
+            answer3.color = new Color(255,255,255,1);
         }
         
         if (talkSystem.activeSelf)
@@ -97,9 +110,9 @@ public class talkBox : MonoBehaviour
     {
         if (other.name.Equals("player"))
         {
-            
-            if (talkPhase == 0 && Input.GetKeyDown(KeyCode.Return) && !alreadyTalked)
+            if (talkPhase == 0 && Input.GetKeyDown(KeyCode.Return) && !alreadyTalked && !talkingToSomeoneElse)
             {
+                talkingToMe = true;
                 talkSystem.SetActive(true);
                 playerscript.movelocked = true;
                 talkPhase++;
@@ -117,7 +130,6 @@ public class talkBox : MonoBehaviour
                     }
                     talkPhase++;
                     highlightedAnswer = 1;
-                    Debug.Log("favor: " + favor);
                 }
             } else if (talkPhase == 2)
             {
@@ -133,7 +145,6 @@ public class talkBox : MonoBehaviour
                     }
                     talkPhase++;
                     highlightedAnswer = 1;
-                    Debug.Log("favor: " + favor);
                 }
             } else if (talkPhase == 3)
             {
@@ -166,24 +177,26 @@ public class talkBox : MonoBehaviour
                 }
             }
             
-            if (alreadyTalked && Input.GetKeyDown(KeyCode.Return) && !talking && talkPause <= 0)
+            if (alreadyTalked && Input.GetKeyDown(KeyCode.Return) && !talkingToSomeoneElse && talkPause <= 0 && talkphase2 == 0)
             {
+                talkingToMe = true;
                 talkSystem.SetActive(true);
                 dialogue.text = alreadyTalkedText;
                 answer1.text = "";
                 answer2.text = "";
                 answer3.text = "";
                 playerscript.movelocked = true;
-                talking = true;
-            } else if (talking)
+                talkphase2++;
+            } else if (talkphase2 == 1)
             {
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
                     playerscript.movelocked = false;
                     talkSystem.SetActive(false);
-                    talkPhase = 0;
                     highlightedAnswer = 1;
-                    talking = false;
+                    talkingToSomeoneElse = false;
+
+                    talkphase2 = 0;
                 }
             }
         }
