@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Timers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,10 +45,16 @@ public class talkBox : MonoBehaviour
     private int talkphase2;
 
     public GameObject score;
+
+    public GameObject thisDog;
+    private bool scoreUpdate;
+    private float invoke;
     
     void Start()
     {
+        invoke = .2f;
         talkSystem.SetActive(false);
+        playerscript = GameObject.Find("player").GetComponent<player>();
         playerscript = GameObject.Find("player").GetComponent<player>();
         highlightedAnswer = 1;
         talkPhase = 0;
@@ -108,6 +113,7 @@ public class talkBox : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        
         if (other.name.Equals("player"))
         {
             if (talkPhase == 0 && Input.GetKeyDown(KeyCode.Return) && !alreadyTalked && !talkingToSomeoneElse)
@@ -115,8 +121,8 @@ public class talkBox : MonoBehaviour
                 talkingToMe = true;
                 talkSystem.SetActive(true);
                 playerscript.movelocked = true;
-                talkPhase++;
-            } else if (talkPhase == 1)
+                Invoke("addPhase", invoke);
+            } else if (talkPhase == 1 && !alreadyTalked)
             {
                 dialogue.text = dialogue1;
                 answer1.text = answer11;
@@ -128,10 +134,10 @@ public class talkBox : MonoBehaviour
                     {
                         favor++;
                     }
-                    talkPhase++;
+                    Invoke("addPhase", invoke);
                     highlightedAnswer = 1;
                 }
-            } else if (talkPhase == 2)
+            } else if (talkPhase == 2 && !alreadyTalked)
             {
                 dialogue.text = dialogue2;
                 answer1.text = answer21;
@@ -143,7 +149,7 @@ public class talkBox : MonoBehaviour
                     {
                         favor++;
                     }
-                    talkPhase++;
+                    Invoke("addPhase", invoke);
                     highlightedAnswer = 1;
                 }
             } else if (talkPhase == 3)
@@ -155,6 +161,15 @@ public class talkBox : MonoBehaviour
                     answer2.text = "";
                     answer3.text = "";
                     
+                    var scoreMan = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
+
+                    if (!scoreUpdate)
+                    {
+                        scoreMan.addScore(thisDog);
+                        scoreMan.lessDogsLeft();
+                        scoreUpdate = true;
+                        alreadyTalked = true;
+                    }
                     dog.GetComponent<dogFriend>().dogFollow = true;
                 }
                 else
@@ -163,17 +178,28 @@ public class talkBox : MonoBehaviour
                     answer1.text = "";
                     answer2.text = "";
                     answer3.text = "";
+                    
+                    var scoreMan = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
+                    
+                    if (!scoreUpdate)
+                    {
+                        scoreMan.lessDogsLeft();
+                        scoreUpdate = true;
+                        alreadyTalked = true;
+                    }
                 }
 
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
                     playerscript.movelocked = false;
-                    alreadyTalked = true;
                     talkSystem.SetActive(false);
                     talkPhase = 0;
                     highlightedAnswer = 1;
                     timer = true;
-                    score.GetComponent<scoreUpdate>().downDog();
+                    dialogue.text = "";
+                    answer1.text = "";
+                    answer2.text = "";
+                    answer3.text = "";
                 }
             }
             
@@ -187,7 +213,7 @@ public class talkBox : MonoBehaviour
                 answer3.text = "";
                 playerscript.movelocked = true;
                 talkphase2++;
-            } else if (talkphase2 == 1)
+            } else if (talkphase2 == 1 && alreadyTalked)
             {
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
@@ -291,5 +317,13 @@ public class talkBox : MonoBehaviour
                 }
             }
         } */
+    }
+
+    public void addPhase()
+    {
+        if (!IsInvoking())
+        {
+            talkPhase++;
+        }
     }
 }

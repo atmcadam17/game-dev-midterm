@@ -11,7 +11,6 @@ public class treatTalk : MonoBehaviour
     // like "i don't want this" and maybe some1 takes it
 
     private bool playerCarry;
-    public bool talking;
     
     public GameObject talkSystem;
     public Text text;
@@ -25,7 +24,6 @@ public class treatTalk : MonoBehaviour
     private bool talked;
 
     private GameObject treat;
-    private talkBox talkboxscript;
     private player playermove;
     
     void Start()
@@ -34,8 +32,6 @@ public class treatTalk : MonoBehaviour
         playerCarry = false;
         talkPhase = 0;
         treat = GameObject.Find("treat");
-        talking = false;
-        talkboxscript = this.GetComponent<talkBox>();
         playermove = GameObject.Find("player").GetComponent<player>();
     }
 

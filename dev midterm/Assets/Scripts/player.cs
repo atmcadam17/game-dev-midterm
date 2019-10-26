@@ -10,7 +10,6 @@ public class player : MonoBehaviour
     public float jumppower;
     public float jumpRayDist;
     private Array treatList;
-    public pickuptreat respawn;
     
 
     [HideInInspector]
@@ -23,12 +22,12 @@ public class player : MonoBehaviour
     {
         rb = this.GetComponent<Rigidbody>();
         carrying = false;
-        respawn = GameObject.Find("treat collider").GetComponent<pickuptreat>();
     }
 
     void Update()
     {
         treatList = GameObject.FindGameObjectsWithTag("treat");
+        
         if (carrying)
         {
             checkTreats();

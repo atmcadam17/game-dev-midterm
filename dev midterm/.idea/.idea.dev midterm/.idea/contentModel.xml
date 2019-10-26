@@ -12,11 +12,13 @@
         <e p="Scripts" t="Include">
           <e p="cameraFollow.cs" t="Include" />
           <e p="dogFriend.cs" t="Include" />
+          <e p="GameManager.cs" t="Include" />
           <e p="lonedogMove.cs" t="Include" />
           <e p="pickuptreat.cs" t="Include" />
           <e p="player.cs" t="Include" />
-          <e p="scoreUpdate.cs" t="Include" />
+          <e p="ScoreManager.cs" t="Include" />
           <e p="specialTalk.cs" t="Include" />
+          <e p="specialTreatTalk.cs" t="Include" />
           <e p="startGame.cs" t="Include" />
           <e p="talkBox.cs" t="Include" />
           <e p="test stuff" t="Include">
@@ -25,10 +27,10 @@
             <e p="raycastTest.cs" t="Include" />
             <e p="roombaController.cs" t="Include" />
           </e>
+          <e p="textbox.cs" t="Include" />
           <e p="treatBehavior.cs" t="Include" />
           <e p="treatTalk.cs" t="Include" />
         </e>
-        <e p="specialTreatTalk.cs" t="Include" />
       </e>
       <e p="dev midterm.sln" t="IncludeFlat" />
       <e p="Library" t="ExcludeRecursive" />

@@ -6,7 +6,7 @@ public class lonedogMove : MonoBehaviour
 {
     public float moveSpeed;
     public float maxDist;
-    [HideInInspector] public bool movement;
+    public bool movement;
     
     void Start()
     {
@@ -26,12 +26,12 @@ public class lonedogMove : MonoBehaviour
             if (rand < 0.5f)
             {
                 // turn left
-                this.transform.Rotate(0,-90,0);
+                this.transform.Rotate(0,-60,0);
             }
             else
             {
                 // turn right
-                this.transform.Rotate(0,90,0);
+                this.transform.Rotate(0,60,0);
             }
         }
         else if (movement)

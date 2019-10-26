@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class specialTalk : MonoBehaviour
 {
     public List<string> dialogue;
-    public bool friendly;
 
     private int talkPhase;
 
@@ -20,19 +19,32 @@ public class specialTalk : MonoBehaviour
     public Text answer3;
 
     public bool inRange;
+
+    private player playermove;
+    private bool talkingToSomeoneElse;
+    private bool talkingToMe;
     
     void Start()
     {
-        friendly = false;
+        talkingToMe = false;
         move = GameObject.Find("partytime").GetComponent<lonedogMove>();
         follow = GameObject.Find("partytime").GetComponent<dogFriend>();
         talkPhase = 0;
         inRange = false;
+        playermove = GameObject.Find("player").GetComponent<player>();
+        talkingToSomeoneElse = false;
     }
 
     void Update()
     {
-        
+        if (talkSystem.activeSelf && !talkingToMe)
+        {
+            talkingToSomeoneElse = true;
+        }
+        else
+        {
+            talkingToSomeoneElse = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -47,9 +59,11 @@ public class specialTalk : MonoBehaviour
     {
         if (other.name == "player")
         {
-            if (Input.GetKeyDown(KeyCode.Return) && follow.dogFollow == false)
+            if (Input.GetKeyDown(KeyCode.Return) && follow.dogFollow == false && !talkingToSomeoneElse)
             {
+                talkingToMe = true;
                 talkSystem.SetActive(true);
+                playermove.movelocked = true;
                 move.movement = false;
                 answer1.text = "";
                 answer2.text = "";
@@ -61,35 +75,31 @@ public class specialTalk : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
-                    talkPhase++;
+                    Invoke("addPhase", .2f);
                 }
                 text.text = dialogue[1];
             } else if (talkPhase == 2)
             {
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
-                    talkPhase++;
+                    Invoke("addPhase", .2f);
                 }
                 text.text = dialogue[2];
             } else if (talkPhase == 3)
             {
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
-                    talkPhase++;
+                    Invoke("addPhase", .2f);
                 }
                 text.text = dialogue[3];
             } else if (talkPhase == 4)
             {
                 move.movement = true;
+                talkingToMe = true;
                 talkPhase = 0;
                 talkSystem.SetActive(false);
+                playermove.movelocked = false;
             }
-        }
-
-        if (other.name == "treat")
-        {
-            follow.dogFollow = true;
-            move.movement = false;
         }
     }
     
@@ -98,6 +108,14 @@ public class specialTalk : MonoBehaviour
         if (other.gameObject.name.Equals("player"))
         {
             inRange = false;
+        }
+    }
+    
+    void addPhase()
+    {
+        if (!IsInvoking())
+        {
+            talkPhase++;
         }
     }
 }
